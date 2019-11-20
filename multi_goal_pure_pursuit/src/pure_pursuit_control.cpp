@@ -211,9 +211,5 @@ void LaneCurvatureIntegralExecutor::updateControlCommand(const int i,
 		double steer_angle = atan(2*config->wheelbase*sin(best_angle));
 		curvatureToControlcommand(state->msg_velocity, best_angle, target_velocity,
 						config->wheelbase, 1.0/config->update_hz, &state->msg_command);
-
 	}
-	std::cout << lat_error << '\t' << selected_goals << '\t' <<
-			get2DPlaneDistance(state->msg_pose.pose.position, state->lane.waypoints[0].pose.pose.position) << std::endl;
-
 }
