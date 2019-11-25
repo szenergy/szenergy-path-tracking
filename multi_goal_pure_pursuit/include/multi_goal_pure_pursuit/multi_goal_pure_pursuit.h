@@ -127,7 +127,7 @@ public:
 	{
 		// See the following articles:
 		// Circle fitting by linear and nonlinear least squares; I. D. Coope
-		// Least-squares fitting of circles and ellipses; Walter GanderGene H. GolubRolf Strebel
+		// Least-squares fitting of circles and ellipses; Walter Gander, Gene H. Golub, Rolf Strebel
 		Eigen::MatrixXd points(n*2+1, 2);
 		points(0,0) = start_point.x;
 		points(0,1) = start_point.y;
