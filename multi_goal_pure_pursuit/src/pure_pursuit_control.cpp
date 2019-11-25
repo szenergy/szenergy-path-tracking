@@ -134,6 +134,7 @@ double MultiGoalPurePursuitExecutor::multiAngleCurvature(const unsigned int offs
 	tf::Quaternion quat;
 	double yaw = tf::getYaw(state->msg_pose.pose.orientation);
 
+	/*
 	while(true)
 	{
 		if (ang >= ang_max){
@@ -158,6 +159,7 @@ double MultiGoalPurePursuitExecutor::multiAngleCurvature(const unsigned int offs
 		ang += d_ang;
 		i++;
 	}
+	*/
 	return angles[min_i];
 }
 

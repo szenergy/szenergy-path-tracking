@@ -211,8 +211,10 @@ target_link_libraries(${PROJECT_NAME}_node
 
 ## Add gtest based cpp test target and link libraries
 catkin_add_gtest(pure-pursuit-basic-functions-test test/test_basic_functions.cpp src/trajectory_lib.cpp)
+catkin_add_gtest(pure-pursuit-circle-fitting-test test/test_circle_fitting.cpp src/trajectory_lib.cpp)
 if(TARGET pure-pursuit-basic-functions-test)
   target_link_libraries(pure-pursuit-basic-functions-test ${catkin_LIBRARIES})
+  target_link_libraries(pure-pursuit-circle-fitting-test ${catkin_LIBRARIES})
 endif()
 
 ## Add folders to be run by python nosetests

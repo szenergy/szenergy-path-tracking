@@ -100,6 +100,38 @@ public:
 	void visualizeMultiSelectedGoals(unsigned int offset,
 			unsigned int multi_angle_goal_length);
 
+	static double calcLsRadius(unsigned int n, unsigned int offset, const geometry_msgs::Point start_point,
+			const autoware_msgs::Lane& lane)
+	{
+		// See the following articles:
+		// Circle fitting by linear and nonlinear least squares; I. D. Coope
+		// Least-squares fitting of circles and ellipses; Walter GanderGene H. GolubRolf Strebel
+		Eigen::MatrixXd points(n+1, 2);
+		points(0,0) = start_point.x;
+		points(0,1) = start_point.y;
+		for (int i = 0; i < n; i++)
+		{
+			points(i+1,0) = lane.waypoints[offset+i].pose.pose.position.x;
+			points(i+1,1) = lane.waypoints[offset+i].pose.pose.position.y;
+		}
+		Eigen::MatrixXd Q(points.rows(), points.cols() + 1);
+
+		Q.block(0,0,n+1, points.cols()) = points;
+		// TODO: make up your mind and make it better but it's 3AM
+		for (int i = 0; i < n+1; i++)
+		{
+			Q(i,2) = 1;
+		}
+		// Bad segment end
+		Q.rightCols(0).setOnes();
+		Eigen::VectorXd res = Q.colPivHouseholderQr().solve(points.cwiseProduct(points).rowwise().squaredNorm());
+		Eigen::VectorXd x = 0.5*res.segment(0,2);
+		std::cout << x << std::endl;
+		std::cout << res(Q.cols()-1) + x.transpose().dot(x) << '\n';
+
+		return std::sqrt(res(Q.cols()-1) + x.dot(x.transpose()));
+	}
+
 };
 
 
