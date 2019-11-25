@@ -16,12 +16,22 @@ TEST(TestBasicCircleFitting, TestOnePoint)
 	geometry_msgs::Point start;
 	start.x = 0.0;
 	autoware_msgs::Waypoint wp0;
-	wp0.pose.pose.position.x = 2.0;
-	wp0.pose.pose.position.y = 0.0;
+	wp0.pose.pose.position.x = 0.0;
+	wp0.pose.pose.position.y = 2.0;
 	wp0.pose.pose.position.z = 0.0;
 	lane.waypoints.push_back(wp0);
+	autoware_msgs::Waypoint wp1;
+	wp1.pose.pose.position.x = 1.0;
+	wp1.pose.pose.position.y = 1.0;
+	wp1.pose.pose.position.z = 0.0;
+	lane.waypoints.push_back(wp1);
+	autoware_msgs::Waypoint wp2;
+	wp2.pose.pose.position.x = -1.0;
+	wp2.pose.pose.position.y = 1.0;
+	wp2.pose.pose.position.z = 0.0;
+	lane.waypoints.push_back(wp2);
 	std::cout << "Simple circle fitting with one point" << '\n';
-	std::cout << MultiGoalPurePursuit::calcLsRadius(1, 0, start, lane) << '\n';
+	std::cout << "Radius:" << MultiGoalPurePursuit::calcLsRadius(3, 0, start, lane) << '\n';
 }
 
 int main(int argc, char** argv)

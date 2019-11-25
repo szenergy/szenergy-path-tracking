@@ -133,8 +133,10 @@ double MultiGoalPurePursuitExecutor::multiAngleCurvature(const unsigned int offs
 	std::vector<double> dsums;
 	tf::Quaternion quat;
 	double yaw = tf::getYaw(state->msg_pose.pose.orientation);
-
-	/*
+	//double radius = MultiGoalPurePursuit::calcLsRadius(multi_angle_goal_length, offset,
+	//		state->msg_pose.pose.position, state->lane);
+	double radius = MultiGoalPurePursuit::calcLsRadius(multi_angle_goal_length, offset,
+				state->msg_pose.pose.position, state->lane);
 	while(true)
 	{
 		if (ang >= ang_max){
@@ -159,8 +161,8 @@ double MultiGoalPurePursuitExecutor::multiAngleCurvature(const unsigned int offs
 		ang += d_ang;
 		i++;
 	}
-	*/
 	return angles[min_i];
+	//return 2.0/radius;
 }
 
 
@@ -209,9 +211,13 @@ void LaneCurvatureIntegralExecutor::updateControlCommand(const int i,
 
 		}
 		double best_angle = multiAngleCurvature(i, selected_goals);
-
+		//double curvature = multiAngleCurvature(i, selected_goals);
+		//curvatureToControlcommand(state->msg_velocity, curvature, target_velocity,
+		//						config->wheelbase, 1.0/config->update_hz, &state->msg_command);
 		double steer_angle = atan(2*config->wheelbase*sin(best_angle));
+
 		curvatureToControlcommand(state->msg_velocity, best_angle, target_velocity,
 						config->wheelbase, 1.0/config->update_hz, &state->msg_command);
+
 	}
 }
